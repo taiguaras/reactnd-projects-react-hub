@@ -2,4 +2,7 @@
 import thunk from 'redux-thunk';
 import { applyMiddleware } from 'redux';
 
-export default applyMiddleware(thunk);
+// Middleware Logger
+import logger from './logger';
+
+export default applyMiddleware(thunk,logger);

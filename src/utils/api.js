@@ -15,6 +15,16 @@ export const getPosts = () =>
     .then(data => data)
     .catch(error => console.log(error))
 
+export const addPost = (postData) =>
+	fetch(`${api}/posts`, {
+			headers,
+			method: 'POST',
+			body: JSON.stringify(postData)
+	})
+			.then(res => res.json())
+			.then(data => data)
+			.catch(error => console.log(error))
+
 export const getPostsByCategory = (categoryName) =>
   fetch(`${api}/${categoryName}/posts`, { headers })
     .then(res => res.json())
@@ -53,17 +63,6 @@ export const getCategories = () =>
   fetch(`${api}/categories`, { headers })
     .then(res => res.json())
     .then(data => data.categories)
-    .catch(error => console.log(error))
-
-
-export const addPost = (postData) =>
-  fetch(`${api}/posts`, {
-    headers,
-    method: 'POST',
-    body: JSON.stringify(postData)
-  })
-    .then(res => res.json())
-    .then(data => data)
     .catch(error => console.log(error))
 
 export const editPost = (postData) =>
