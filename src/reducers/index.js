@@ -1,9 +1,10 @@
 // Basic
 import { combineReducers } from 'redux';
 
+
 // Reducers
 // import categories from './categories';
-// import posts from './posts';
+import postList from './postList';
 import post from './post';
 // import user from './user';
 // import comments from './comments';
@@ -11,8 +12,7 @@ import post from './post';
 // Combine and export
 export default combineReducers({
 //   user,
-//   categories,
-//   posts,
+postList,
   post
 //   comments
 });

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Post from './Post';
-import { List } from 'semantic-ui-react';
+import { List, Container } from 'semantic-ui-react';
 
 // const teste = {
 //     title: 'Welcome to React',
@@ -22,7 +22,7 @@ class PostList extends Component {
         const { Posts } = this.props;
       
         return (
-
+            <Container> 
             <div className="ui cards"> 
 
             {Posts.map((post) => (
@@ -36,6 +36,7 @@ class PostList extends Component {
                 <Post postMeta={teste}/>
                 <Post postMeta={teste}/> */}
             </div>
+            </Container>
 
         );
     }

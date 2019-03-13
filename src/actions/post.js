@@ -1,5 +1,5 @@
 import {
-    getPost,
+    getPostById,
     addPost,
   } from '../utils/api.js';
 
@@ -13,9 +13,10 @@ function getPostAction(post) {
       post,
     };
   }
+
   export function handleGetPost(postId) {
     return dispatch => {
-      return getPost(postId).then(post => {
+      return getPostById(postId).then(post => {
         dispatch(getPostAction(post));
       });
     };
@@ -28,6 +29,7 @@ function getPostAction(post) {
       data,
     };
   }
+
   export function handleAddPost(postData) {
     return dispatch => {
       return addPost(postData).then(data => {
