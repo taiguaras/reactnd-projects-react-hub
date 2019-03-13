@@ -26,13 +26,16 @@ class Post extends Component {
             </Card.Content>
             <Card.Content extra>
             <div className="card-meta">
+            <div>
               <a>
-                  <Icon name='plus'/>
+                  <Icon name='thumbs up outline'/>
               </a>
+              <span>{postMeta.rating} votes</span>
               <a>
-                  <Icon name='minus'/>
+                  <Icon name='thumbs down outline'/>
               </a> 
-              {postMeta.rating} votes
+              </div>
+              
               <a>
                   <Icon name='comment alternate'/> {postMeta.comments} comments
               </a> 

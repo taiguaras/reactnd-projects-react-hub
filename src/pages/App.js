@@ -15,6 +15,12 @@ background-color: yellow;
   justify-content: space-around;
   display: flex;
 }
+.card-meta i{
+  margin:2px;
+}
+.card-meta span{
+  margin:5px;
+}
 `;
 
 
