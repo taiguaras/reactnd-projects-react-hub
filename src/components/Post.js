@@ -30,7 +30,7 @@ class Post extends Component {
               <a>
                   <Icon name='thumbs up outline'/>
               </a>
-              <span>{postMeta.rating} votes</span>
+              <span>{postMeta.rating}</span>
               <a>
                   <Icon name='thumbs down outline'/>
               </a> 

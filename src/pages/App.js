@@ -6,7 +6,9 @@ import { connect } from "react-redux";
 
 const Div = styled.div`
 .intro-content{
-background-color: yellow;   
+text-align: center;
+padding: 5px;  
+margin: 20px;
 }
 .page{
   margin-top: 58px;
