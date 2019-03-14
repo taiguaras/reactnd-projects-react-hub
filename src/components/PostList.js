@@ -1,46 +1,27 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Post from './Post';
-import { List, Container } from 'semantic-ui-react';
+import {List, Container, Item} from 'semantic-ui-react';
 
-// const teste = {
-//     title: 'Welcome to React',
-//     description:'This is only a post description',
-//     content:'This is only a post content',
-//     category:'Capoeira',
-//     image:'https://react.semantic-ui.com/images/avatar/large/matthew.png',
-//     rating:'5',
-//     comments:'8',
-//     date:'20/02/2019',
-//     good:'3',
-//     bad:'2'
-//   };
+// const teste = {     title: 'Welcome to React',     description:'This is only
+// a post description',     content:'This is only a post content',
+// category:'Capoeira',
+// image:'https://react.semantic-ui.com/images/avatar/large/matthew.png',
+// rating:'5',     comments:'8',     date:'20/02/2019',     good:'3', bad:'2'
+// };
 
 class PostList extends Component {
 
-    render() {
+  render() {
 
-        const { Posts } = this.props;
-      
-        return (
-            <Container> 
-            <div className="ui cards"> 
+    const {Posts} = this.props;
 
-            {Posts.map((post) => (
+    return (
+      <Container>
 
-                <Post postMeta={post} key={post.id}/>                       
-            
-            ))}  
+      </Container>
 
-                {/* <Post postMeta={teste}/>
-                <Post postMeta={teste}/>
-                <Post postMeta={teste}/>
-                <Post postMeta={teste}/> */}
-            </div>
-            </Container>
-
-        );
-    }
-
+    );
+  }
 
 }
 

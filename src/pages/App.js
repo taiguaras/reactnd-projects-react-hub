@@ -3,15 +3,22 @@ import Routes from '../components/Routes';
 import styled from 'styled-components';
 
 import { connect } from "react-redux";
+import { handleGetPosts } from '../actions/postList'
 
 const Div = styled.div`
+a.item{
+align-self: center;
+}
 .intro-content{
 text-align: center;
 padding: 5px;  
 margin: 20px;
 }
 .page{
-  margin-top: 58px;
+  margin-top: 49px;
+}
+.header img{
+  width: 100%;
 }
 .card-meta{
   justify-content: space-around;
@@ -28,6 +35,10 @@ margin: 20px;
 
 
 class App extends Component {
+  componentDidMount(){
+    this.props.dispatch(handleGetPosts())
+  }
+
   render() {
     return (      
       <Div>
@@ -37,6 +48,6 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect()(App);
 
 

@@ -4,6 +4,8 @@ import Main from '../pages/Main';
 import Detail from '../pages/Detail';
 import Categories from '../pages/Categories';
 import PostCtrl from '../pages/PostCtrl';
+import Sample from '../pages/Sample';
+import LoginForm from '../pages/Login';
 
 const Routes = () => (
     <BrowserRouter basename={process.env.PUBLIC_URL}>    
@@ -15,6 +17,10 @@ const Routes = () => (
             <Route path="/new-post" component={PostCtrl}/>
 
             <Route path="/categories" component={Categories} />   
+
+            <Route path="/sample" component={Sample} />  
+
+            <Route path="/login" component={LoginForm} />  
 
         </Switch>
     </BrowserRouter>
