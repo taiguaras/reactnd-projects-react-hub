@@ -3,7 +3,7 @@ import Post from './Post';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types'
-import {List, Container, Item, Dropdown, Input} from 'semantic-ui-react';
+import {List, Container, Item, Dropdown, Input, Card, Image, Icon} from 'semantic-ui-react';
 
 // import {handleGetPost, handleEditPost, handleDeletePost} from
 // '../actions/post';
@@ -42,7 +42,7 @@ class PostList extends Component {
   render() {
 
     const {sortType, sortOrder, search} = this.state;
-    const {posts} = this.props;
+    const {postList} = this.props;
 
      console.log("PostList RENDER POST ->>", this.props)
 
@@ -67,17 +67,51 @@ class PostList extends Component {
           </Dropdown.Menu>
         </Dropdown>   
 
-           
 
-        {/* {posts.loading === true && (
+    {postList.list.map(post => (
+    <div post={post} key={post.id}>
+              <Card>
+                  {/* <Image
+                    src={post.image
+                    ? post.image
+                    : 'https://react.semantic-ui.com/images/avatar/large/matthew.png'}/> */}
+                  <Card.Content>
+                    <Card.Header>{post.title}</Card.Header>
+                    <Card.Meta>
+                      <span className='date'>{post.date}</span>
+                    </Card.Meta>
+                    <Card.Description>{post.body}</Card.Description>
+                  </Card.Content>
+                  <Card.Content extra>
+                    <div className="card-meta">
+                      <div>
+                        <a>
+                          <Icon name='thumbs up outline'/>
+                        </a>
+                        <span>{post.voteScore}</span>
+                        <a>
+                          <Icon name='thumbs down outline'/>
+                        </a>
+                      </div>
+                      <a>
+                        <Icon name='comment alternate'/> {post.commentCount}{' '}
+                        comments
+                      </a>
+                    </div>
+                  </Card.Content>
+                </Card>
+    </div>))} 
+              
+
+        {/* {postList.loading === true && (
           <div>Loading Posts...</div>
         )}
-        {(posts.loading === false && posts.list.length === 0) && (
+        {(postList.loading === false && postList.list.length === 0) && (
           <div>
             No posts found in this category<br/><br/>
           </div>
         )}
-        {posts.loading === false && posts
+        {postList.loading === false && postList
           .list
           .map(post => (<Post post={post} key={post.id}/>))} */}
       </Container>
@@ -87,11 +121,13 @@ class PostList extends Component {
 
 }
 
-function mapStateToProps({posts}, props) {
+function mapStateToProps({postList}, props) {
   // console.log("mapstatetoProps", post)
-  return {posts};
+  return {postList};
 
 }
 const mapDispatchToProps = dispatch => bindActionCreators({handlePostList
 }, dispatch);
+
+
 export default connect(mapStateToProps, mapDispatchToProps)(PostList);
