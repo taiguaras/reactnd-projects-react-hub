@@ -67,14 +67,13 @@ class PostList extends Component {
           </Dropdown.Menu>
         </Dropdown>   
 
-
-    {postList.list.map(post => (
-    <div post={post} key={post.id}>
-              <Card>
-                  {/* <Image
+<Card.Group>
+    {postList.list.map(post => (    
+              <Card post={post} key={post.id} href='/teste'>
+                   <Image
                     src={post.image
                     ? post.image
-                    : 'https://react.semantic-ui.com/images/avatar/large/matthew.png'}/> */}
+                    : 'https://react.semantic-ui.com/images/avatar/large/matthew.png'}/>
                   <Card.Content>
                     <Card.Header>{post.title}</Card.Header>
                     <Card.Meta>
@@ -100,9 +99,9 @@ class PostList extends Component {
                     </div>
                   </Card.Content>
                 </Card>
-    </div>))} 
               
-
+    ))}               
+</Card.Group>
         {/* {postList.loading === true && (
           <div>Loading Posts...</div>
         )}

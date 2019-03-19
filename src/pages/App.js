@@ -33,6 +33,11 @@ margin: 20px;
 .card-meta span{
   margin:5px;
 }
+.ui.card {
+  //width: 80%;
+  margin: auto;
+  margin: 20px
+}
 `;
 
 // Init Store

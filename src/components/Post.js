@@ -59,12 +59,11 @@ class Post extends Component {
     if (post.data === undefined) return (<div>LOADING...</div>)
 
     return (
-
       <Card>
-        {/* <Image
+        <Image
           src={post.image
           ? post.image
-          : 'https://react.semantic-ui.com/images/avatar/large/matthew.png'}/> */}
+          : 'https://react.semantic-ui.com/images/avatar/large/matthew.png'}/>
         <Card.Content>
           <Card.Header>{post.data.title}</Card.Header>
           <Card.Meta>
@@ -91,6 +90,7 @@ class Post extends Component {
           </div>
         </Card.Content>
       </Card>
+      
     );
   }
 
