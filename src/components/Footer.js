@@ -1,19 +1,10 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types'
 import {
-  Button,
   Container,
-  Divider,
   Grid,
   Header,
-  Icon,
-  Image,
   List,
-  Menu,
-  Responsive,
   Segment,
-  Sidebar,
-  Visibility,
 } from 'semantic-ui-react'
 
 class Footer extends Component {

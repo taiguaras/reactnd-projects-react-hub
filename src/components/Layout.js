@@ -1,18 +1,13 @@
 import React, {Component} from 'react';
-import Navbar from './Navbar';
 import Footer from './Footer';
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom';
 
 import {
-  Button,
+  
   Container,
-  Divider,
-  Grid,
-  Header,
   Icon,
   Image,
-  List,
   Menu,
   Responsive,
   Segment,
@@ -31,56 +26,14 @@ const getWidth = () => {
     : window.innerWidth
 }
 
-/* eslint-disable react/no-multi-comp */
-/* Heads up! HomepageHeading uses inline styling, however it's not the best practice. Use CSS or styled components for
- * such things.
- */
-const HomepageHeading = ({mobile}) => (
-  <Container text>
-    <Header
-      as='h1'
-      content='React Hub'
-      inverted
-      style={{
-      fontSize: mobile
-        ? '2em'
-        : '4em',
-      fontWeight: 'normal',
-      marginBottom: 0,
-      marginTop: mobile
-        ? '1.5em'
-        : '3em'
-    }}/>
-    <Header
-      as='h2'
-      content='Rolling on redux.'
-      inverted
-      style={{
-      fontSize: mobile
-        ? '1.5em'
-        : '1.7em',
-      fontWeight: 'normal',
-      marginTop: mobile
-        ? '0.5em'
-        : '1.5em'
-    }}/>
-    <Button primary size='huge'>
-      Get Started
-      <Icon name='right arrow'/>
-    </Button>
-  </Container>
-)
-
-HomepageHeading.propTypes = {
-  mobile: PropTypes.bool
-}
-
 /* Heads up!
  * Neither Semantic UI nor Semantic UI React offer a responsive navbar, however, it can be implemented easily.
  * It can be more complicated, but you can create really flexible markup.
  */
 class DesktopContainer extends Component {
-  state = {}
+  state = { activeItem: 'home' }
+
+  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   hideFixedMenu = () => this.setState({fixed: false})
   showFixedMenu = () => this.setState({fixed: true})
@@ -88,6 +41,7 @@ class DesktopContainer extends Component {
   render() {
     const {children} = this.props
     const {fixed} = this.state
+    const { activeItem } = this.state
 
     return (
       <Responsive getWidth={getWidth} minWidth={Responsive.onlyTablet.minWidth}>
@@ -105,25 +59,35 @@ class DesktopContainer extends Component {
               fixed={fixed
               ? 'top'
               : null}
-              inverted={fixed}
+              inverted={false}
               pointing={!fixed}
               secondary={!fixed}
               size='large'>
               <Container>
-                <Menu.Item as='span' link='www.abc.com' active>
-                  <Link to={`/`}>Home</Link>
+                <Menu.Item
+                name='home' active={activeItem === 'home'} onClick={this.handleItemClick}
+                as='span' link='www.abc.com'>
+                  <Link to={'/'}>Home</Link>
                 </Menu.Item>
-                <Menu.Item as='span'>
-                  <Link to={`/categories`}>Categories</Link>
+                <Menu.Item 
+                name='categories' active={activeItem === 'categories'} onClick={this.handleItemClick}
+                as='span'>
+                  <Link to={'/categories'}>Categories</Link>
                 </Menu.Item>
-                <Menu.Item as='span'>
-                  <Link to={`/new-post`}>New Post</Link>
+                <Menu.Item 
+                name='new-post' active={activeItem === 'new-post'} onClick={this.handleItemClick}
+                as='span'>
+                  <Link to={'/new-post'}>New Post</Link>
                 </Menu.Item>
-                <Menu.Item as='span'>
-                  <Link to={`/login`}>Log in</Link>
+                <Menu.Item
+                name='login' active={activeItem === 'login'} onClick={this.handleItemClick}
+                as='span'>
+                  <Link to={'/login'}>Log in</Link>
                 </Menu.Item>
-                <Menu.Item as='span'>
-                  <Link to={`/sample`}>Sign up</Link>
+                <Menu.Item
+                name='sample' active={activeItem === 'sample'} onClick={this.handleItemClick}
+                as='span'>
+                  <Link to={'/sample'}>Sign up</Link>
                 </Menu.Item>
                 <Menu.Item position='right'>
                   <Image
@@ -152,9 +116,13 @@ class MobileContainer extends Component {
 
   handleToggle = () => this.setState({sidebarOpened: true})
 
+  hideFixedMenu = () => this.setState({fixed: false})
+  showFixedMenu = () => this.setState({fixed: true})
+
   render() {
     const {children} = this.props
     const {sidebarOpened} = this.state
+    const {fixed} = this.state
 
     return (
       <Responsive
@@ -169,7 +137,7 @@ class MobileContainer extends Component {
           vertical
           visible={sidebarOpened}>
           <Menu.Item as='a' active>
-            <Link to={`/`}>Home</Link>
+            <Link to={`/`}>Home Sidebar Opened</Link>
           </Menu.Item>
           <Menu.Item as='a'>
             <Link to={`/categories`}>Categories</Link>
@@ -186,6 +154,10 @@ class MobileContainer extends Component {
         </Sidebar>
 
         <Sidebar.Pusher dimmed={sidebarOpened}>
+        <Visibility
+          once={false}
+          onBottomPassed={this.showFixedMenu}
+          onBottomPassedReverse={this.hideFixedMenu}>
           <Segment
             textAlign='center'
             style={{
@@ -193,11 +165,15 @@ class MobileContainer extends Component {
           }}
             vertical>
             <Container>
-              <Menu pointing primary size='large'>
+              <Menu pointing primary fixed={fixed
+              ? 'top'
+              : null} size='large'
+              secondary={!fixed} className="fixed">
                 <Menu.Item onClick={this.handleToggle}>
                   <Icon name='sidebar'/>
                 </Menu.Item>
                 <Menu.Item position='right'>
+                PUSHBAR FIXED
                   <Image
                     src="http://taiguaras.xyz/wp-content/uploads/2019/03/favicon.png"
                     size='mini'/>
@@ -205,6 +181,7 @@ class MobileContainer extends Component {
               </Menu>
             </Container>
           </Segment>
+          </Visibility>
 
           {children}
         </Sidebar.Pusher>
