@@ -13,7 +13,7 @@ const Routes = () => (
         <Switch>
             <Route exact path="/" exact={true} component={Main}/>       
             
-            <Route path="/post/:postId" exact={true} component={Post}/>
+            <Route path="/post/:postId" exact={true} component={Detail}/>
 
             <Route path="/new-post" component={PostCtrl}/>
 

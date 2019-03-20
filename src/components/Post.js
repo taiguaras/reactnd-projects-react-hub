@@ -17,7 +17,7 @@ class Post extends Component {
   }
 
   componentDidMount() {
-    const postId = this.props.match.params.postId;
+    const postId = this.props.iD
     console.log('log post will mount =>', this.props)
     this.props.dispatch(handleGetPost(postId));
   }
@@ -31,7 +31,7 @@ class Post extends Component {
       .push(`/${categoryName}/${postId}/edit`);
   }
   deletePost() {
-    const postId = this.props.match.params.postId;
+    const postId = this.props.iD
     const categoryName = this.props.match.params.categoryName;
     this
       .props

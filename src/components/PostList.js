@@ -48,27 +48,8 @@ class PostList extends Component {
 
     return (
       <Container>
-
-        <Dropdown
-          text='Filter Posts'
-          icon='filter'
-          floating
-          labeled
-          button
-          className='icon'>
-          <Dropdown.Menu>
-            <Input icon='search' iconPosition='left' className='search'/>
-            <Dropdown.Divider/>
-            <Dropdown.Header icon='tags' content='Tag Label'/>
-            <Dropdown.Menu scrolling>
-              <Dropdown.Item>Rating</Dropdown.Item>
-              <Dropdown.Item>Date</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown.Menu>
-        </Dropdown>   
-
-<Card.Group>
-    {postList.list.map(post => (    
+      <Card.Group>
+          {postList.list.map(post => (    
               <Card post={post} key={post.id} href='/teste'>
                    <Image
                     src={post.image
@@ -97,8 +78,8 @@ class PostList extends Component {
                         comments
                       </a>
                     </div>
-                  </Card.Content>
-                </Card>
+                </Card.Content>
+              </Card>
               
     ))}               
 </Card.Group>

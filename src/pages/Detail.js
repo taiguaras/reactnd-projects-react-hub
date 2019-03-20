@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Layout from '../components/Layout';
 import { Button } from 'semantic-ui-react'
+import Post from '../components/Post';
 
 class Detail extends Component {
     render() {
@@ -16,7 +17,10 @@ class Detail extends Component {
                     <Button>Rating</Button>  
                     <Button>Date</Button>     
                     Detail page
-                    {this.props.match.params.id}                                      
+                    {this.props.match.params.postId}  
+                     
+
+                    <Post iD={this.props.match.params.postId} />                            
                 </div>    
             </Layout>     
 
