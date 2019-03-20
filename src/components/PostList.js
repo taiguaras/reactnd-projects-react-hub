@@ -7,7 +7,7 @@ import {List, Container, Item, Dropdown, Input, Card, Image, Icon} from 'semanti
 
 // import {handleGetPost, handleEditPost, handleDeletePost} from
 // '../actions/post';
-import {handlePostList} from '../actions/postList'
+import {handlePostList, handleEditPost, handleDeletePost} from '../actions/postList'
 
 class PostList extends Component {
 
@@ -24,19 +24,19 @@ class PostList extends Component {
   };
 
   componentDidMount() {
-    // this.props.dispatch(handlePostList())
     this.loadPostList();
-    console.log("this.props did mount -> PostList", this.props)
   }
 
   loadPostList() {
     const {sortType, sortOrder, search} = this.state;
     const {category, handlePostList} = this.props;
 
-    console.log("props PostList Load -> ", this.props)
-
     //DISPATCHING LIST POST ACTIONS
     handlePostList(sortType, sortOrder, search, category);
+  }
+
+  editPostLink(){
+    console.log('clicou');
   }
 
   render() {
@@ -44,14 +44,13 @@ class PostList extends Component {
     const {sortType, sortOrder, search} = this.state;
     const {postList} = this.props;
 
-     console.log("PostList RENDER POST ->>", this.props)
-
     return (
       <Container>
       <Card.Group>
           {postList.list.map(post => (    
-              <Card post={post} key={post.id} href={`/post/${post.id}`}>
+              <Card post={post} key={post.id}>
                    <Image
+                    href={`/post/${post.id}`}
                     src={post.image
                     ? post.image
                     : 'https://react.semantic-ui.com/images/avatar/large/matthew.png'}/>
@@ -74,8 +73,15 @@ class PostList extends Component {
                         </a>
                       </div>
                       <a>
-                        <Icon name='comment alternate'/> {post.commentCount}{' '}
-                        comments
+                        <Icon name='comment alternate'/> {post.commentCount}                        
+                      </a>
+
+                      <a >
+                        <Icon name='edit outline'/>                         
+                      </a>
+
+                      <a>
+                        <Icon name='trash alternate outline'/>                        
                       </a>
                     </div>
                 </Card.Content>
