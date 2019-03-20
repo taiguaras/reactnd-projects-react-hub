@@ -1,102 +1,57 @@
-import React, {Fragment} from "react";
+import React, {Fragment, Component} from "react";
 import {Field, reduxForm} from "redux-form";
+import {connect} from 'react-redux';
 import {Form} from "semantic-ui-react";
 import Layout from '../components/Layout';
 
 import {Button, Segment, Header, Image, Container} from 'semantic-ui-react'
+import PostForm from "../components/PostForm";
+import { handleAddPost, handleGetPost, handleEditPost } from "../actions/post";
 
 
-const renderCheckbox = field => (<Form.Checkbox
-  checked={!!field.input.value}
-  name={field.input.name}
-  label={field.label}
-  onChange={(e, {checked}) => field.input.onChange(checked)}/>);
+class PostCtrl extends Component {
 
-const renderRadio = field => (<Form.Radio
-  checked={field.input.value === field.radioValue}
-  label={field.label}
-  name={field.input.name}
-  onChange={(e, {checked}) => field.input.onChange(field.radioValue)}/>);
+  submit = data => {
+    // print the form values to the console
+    console.log("Printando valores aqui postSubmitted",data)
 
-const renderSelect = field => (<Form.Select
-  label={field.label}
-  name={field.input.name}
-  onChange={(e, {value}) => field.input.onChange(value)}
-  options={field.options}
-  placeholder={field.placeholder}
-  value={field.input.value}/>);
+      const postData = {
+                        ...data,
+                        id: Math.random().toString(36).substr(-10),
+                        timestamp: Date.now(),
+                        voteScore: 0 //not working
+                      }
+      this.props.dispatch(handleAddPost(postData));
+    
+  }
 
-const renderTextArea = field => (<Form.TextArea
-  {...field.input}
-  label={field.label}
-  placeholder={field.placeholder}/>);
-
-
-const ProfileForm = props => {
-  const {handleSubmit, reset} = props;
-
-  return (
-    <Layout>
+  render(){
+    return(
+      <Layout>
       <div className="categories-page">
         <Fragment>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group widths="equal">
-              <Field
-                component={Form.Input}
-                label="First name"
-                name="firstName"
-                placeholder="First name"/>
-              <Field
-                component={Form.Input}
-                label="Last name"
-                name="lastName"
-                placeholder="Last name"/>
-              <Field
-                component={renderSelect}
-                label="Gender"
-                name="gender"
-                options={[
-                {
-                  key: "m",
-                  text: "Male",
-                  value: "male"
-                }, {
-                  key: "f",
-                  text: "Female",
-                  value: "female"
-                }
-              ]}
-                placeholder="Gender"/>
-            </Form.Group>
-
-            <Form.Group inline>
-              <label>Quantity</label>
-
-              <Field component={renderRadio} label="One" name="quantity" radioValue={1}/>
-              <Field component={renderRadio} label="Two" name="quantity" radioValue={2}/>
-              <Field component={renderRadio} label="Three" name="quantity" radioValue={3}/>
-            </Form.Group>
-
-            <Field
-              component={renderTextArea}
-              label="About"
-              name="about"
-              placeholder="Tell us more about you..."/>
-
-            <Field
-              component={renderCheckbox}
-              label="I agree to the Terms and Conditions"
-              name="isAgreed"/>
-
-            <Form.Group inline>
-              <Form.Button primary>Submit</Form.Button>
-              <Form.Button onClick={reset}>Reset</Form.Button>
-            </Form.Group>
-          </Form>
+          <Container>
+            <PostForm onSubmit={this.submit} />
+          </Container>
         </Fragment>
+        
       </div>
     </Layout>
-  );
-};
+    );
+  }
 
-export default reduxForm({form: "profile"})(ProfileForm);
+}
+
+
+function mapStateToProps({ categories, postData }, props) {
+  return {
+    categories,
+    postData
+  };
+}
+export default connect(mapStateToProps)(PostCtrl);
+
+
+
+
+

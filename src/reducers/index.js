@@ -1,5 +1,6 @@
 // Basic
 import { combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form'
 
 
 // Reducers
@@ -13,6 +14,7 @@ import post from './post';
 export default combineReducers({
 //   user,
 postList,
-  post
+  post,
+  form: formReducer
 //   comments
 });

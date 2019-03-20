@@ -50,7 +50,7 @@ class PostList extends Component {
       <Container>
       <Card.Group>
           {postList.list.map(post => (    
-              <Card post={post} key={post.id} href='/teste'>
+              <Card post={post} key={post.id} href={`/post/${post.id}`}>
                    <Image
                     src={post.image
                     ? post.image
