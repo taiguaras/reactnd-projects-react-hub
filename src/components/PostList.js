@@ -3,11 +3,19 @@ import Post from './Post';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types'
-import {List, Container, Item, Dropdown, Input, Card, Image, Icon} from 'semantic-ui-react';
+import {List, Container, Item, Dropdown, Input, Card, Image, Icon, Menu, Label, Button} from 'semantic-ui-react';
+import Moment from 'react-moment';
 
 // import {handleGetPost, handleEditPost, handleDeletePost} from
 // '../actions/post';
 import {handlePostList, handleEditPost, handleDeletePost} from '../actions/postList'
+import ContentNav from './ContentNav';
+import { equal } from 'assert';
+
+const options = [
+  { key: 'Rating', text: 'Rating', value: 'Rating' },
+  { key: 'Date', text: 'Date', value: 'Date' },
+]
 
 class PostList extends Component {
 
@@ -20,12 +28,14 @@ class PostList extends Component {
   state = {
     sortType: 'DATE',
     sortOrder: 'DESC',
-    search: ''
+    search: '',
+    options
   };
 
   componentDidMount() {
     this.loadPostList();
   }
+
 
   loadPostList() {
     const {sortType, sortOrder, search} = this.state;
@@ -35,17 +45,105 @@ class PostList extends Component {
     handlePostList(sortType, sortOrder, search, category);
   }
 
+    sortPostsByDate() {
+    const { sortOrder, search } = this.state;
+    const { category, handleGetPosts } = this.props;
+    this.setState({
+      sortType: 'DATE'
+    });
+    handlePostList('DATE', sortOrder, search, category);
+  }
+  sortPostsByVotes() {
+    const { sortOrder, search } = this.state;
+    const { category, handleGetPosts } = this.props;
+    this.setState({
+      sortType: 'VOTES'
+    });
+    handlePostList('VOTES', sortOrder, search, category);
+  }
+
+    toggleOrder() {
+    const { sortType, search } = this.state;
+    const { category, handlePostList } = this.props;
+    const sortOrder = this.state.sortOrder === 'ASC' ? 'DESC' : 'ASC';
+    this.setState({
+      sortOrder
+    });
+    handlePostList(sortType, sortOrder, search, category);
+  }
+
+
   editPostLink(){
     console.log('clicou');
   }
 
-  render() {
+  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
-    const {sortType, sortOrder, search} = this.state;
+  handleChange = (e, { value }) => this.setState({ currentValue: value })
+
+  handleAddition = (e, { value }) => {
+    this.setState({
+      options: [{ text: value, value }, ...this.state.options],
+    })
+  }
+
+  render() {
+    
+    const {sortType, sortOrder, search, activeItem, currentValue} = this.state;    
     const {postList} = this.props;
+    const dateToFormat = '1976-04-19T12:59-0500';
 
     return (
-      <Container>
+      <Container>        
+        <Menu>
+        <Container >           
+
+            <p className='menu-item' icon='filter'>Sort posts by:</p>
+
+            <Dropdown
+              width={equal}
+              options={this.state.options}
+              placeholder='Sort by...'
+              search
+              selection
+              fluid
+              allowAdditions
+              additionLabel='Sorted'
+              value={currentValue}
+              onAddItem={this.handleAddition}
+              onChange={this.handleChange}
+              className='icon'              
+            /> 
+
+                        <Dropdown
+              width={equal}
+              options={this.state.options}
+              placeholder='Sort by...'
+              search
+              selection
+              fluid
+              allowAdditions
+              additionLabel='Sorted'
+              value={currentValue}
+              onAddItem={this.handleAddition}
+              onChange={this.handleChange}
+              className='icon'              
+            >
+
+                <Dropdown.Menu>
+                  <Dropdown.Header content='Search Issues' />                  
+                  <Dropdown.Item value={currentValue} onChange={this.handleChange} onClick={() => this.sortPostsByVotes()} active={sortType === 'VOTES'} key='Rating' text='Rating' value='Rating' />
+                  <Dropdown.Item value={currentValue}  onClick={() => this.sortPostsByDate()} active={sortType === 'DATE'} key='Date' text='Date' value='Date' />
+                </Dropdown.Menu>
+              </Dropdown>        
+
+          <Button icon='sort content ascending' onClick={() => this.toggleOrder()} active={sortType === 'ASC'}></Button>  
+          <Button icon='sort content descending' onClick={() => this.toggleOrder()} active={sortType === 'DESC'}></Button>  
+
+        </Container>
+      </Menu>
+
+
       <Card.Group>
           {postList.list.map(post => (    
               <Card post={post} key={post.id}>
@@ -57,7 +155,7 @@ class PostList extends Component {
                   <Card.Content>
                     <Card.Header>{post.title}</Card.Header>
                     <Card.Meta>
-                      <span className='date'>{post.date}</span>
+                      <span className='date'><Moment date={dateToFormat}>{post.timestamp}</Moment></span>
                     </Card.Meta>
                     <Card.Description>{post.body}</Card.Description>
                   </Card.Content>

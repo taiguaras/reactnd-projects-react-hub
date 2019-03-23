@@ -31,7 +31,7 @@ class Main extends Component {
 
         <div className="main-page">
           <div className="intro-content"> 
-            <ContentNav/>     
+          <h1>Home</h1>                
           </div>
 
           <div className="post-wrapper">                

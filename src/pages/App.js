@@ -18,7 +18,10 @@ padding: 5px;
 margin: 20px;
 }
 .page{
-  margin-top: 49px;
+  //margin-top: 49px;
+}
+.post-content{
+  padding-top:20px;
 }
 .header img{
   width: 100%;
