@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Post from './Post';
+import {Link} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types'
@@ -72,9 +73,21 @@ class PostList extends Component {
     handlePostList(sortType, sortOrder, search, category);
   }
 
+  upVoteLink(){
+    console.log('clicou up');
+  }
+
+  downVoteLink(){
+    console.log('clicou down');
+  }
+
 
   editPostLink(){
-    console.log('clicou');
+    console.log('clicou edit');
+  }
+
+  deletePostLink(){
+    console.log('clicou delete');
   }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
@@ -133,7 +146,7 @@ class PostList extends Component {
                 <Dropdown.Menu>
                   <Dropdown.Header content='Search Issues' />                  
                   <Dropdown.Item value={currentValue} onChange={this.handleChange} onClick={() => this.sortPostsByVotes()} active={sortType === 'VOTES'} key='Rating' text='Rating' value='Rating' />
-                  <Dropdown.Item value={currentValue}  onClick={() => this.sortPostsByDate()} active={sortType === 'DATE'} key='Date' text='Date' value='Date' />
+                  <Dropdown.Item value={currentValue} onChange={this.handleChange} onClick={() => this.sortPostsByDate()} active={sortType === 'DATE'} key='Date' text='Date' value='Date' />
                 </Dropdown.Menu>
               </Dropdown>        
 
@@ -162,23 +175,25 @@ class PostList extends Component {
                   <Card.Content extra>
                     <div className="card-meta">
                       <div>
-                        <a>
+                        <a onClick={() => this.upVoteLink()}>
                           <Icon name='thumbs up outline'/>
                         </a>
                         <span>{post.voteScore}</span>
-                        <a>
+                        <a onClick={() => this.downVoteLink()}>
                           <Icon name='thumbs down outline'/>
                         </a>
                       </div>
                       <a>
-                        <Icon name='comment alternate'/> {post.commentCount}                        
+                        <Link to={`/post/${post.id}`}>
+                          <Icon name='comment alternate'/> {post.commentCount}
+                        </Link>                        
                       </a>
 
-                      <a >
+                      <a onClick={() => this.editPostLink()} >
                         <Icon name='edit outline'/>                         
                       </a>
 
-                      <a>
+                      <a onClick={() => this.deletePostLink()}>
                         <Icon name='trash alternate outline'/>                        
                       </a>
                     </div>

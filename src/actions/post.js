@@ -1,10 +1,12 @@
-import {getPostById, addPost, editPost, deletePost} from '../utils/api.js';
+import {getPostById, addPost, editPost, deletePost,
+  increaseVotes, decreaseVotes} from '../utils/api.js';
 
 export const GET_POST = 'GET_POST';
 export const EDIT_POST = 'EDIT_POST';
 export const ADD_POST = 'ADD_POST';
 export const DELETE_POST = 'DELETE_POST';
-//INCREASE VOTE DECREASE VOTE
+export const INCREASE_VOTE = 'INCREASE_VOTE';
+export const DECREASE_VOTE = 'DECREASE_VOTE';
 
 
 function getPostAction(post) {
@@ -55,8 +57,30 @@ export function handleDeletePost(postId) {
   };
 }
 
-//INCREASE VOTE 
-//HANDLE 
-
-//DECREASE VOTE 
-//HANDLE
+function increaseVoteAction(post) {
+  return {
+    type: INCREASE_VOTE,
+    post,
+  };
+}
+export function handleIncreaseVote(post) {
+  return dispatch => {
+    return increaseVotes(post.id).then(post => {
+      dispatch(increaseVoteAction(post));
+    });
+  };
+}
+//
+function decreaseVoteAction(post) {
+  return {
+    type: DECREASE_VOTE,
+    post,
+  };
+}
+export function handleDecreaseVote(post) {
+  return dispatch => {
+    return decreaseVotes(post.id).then(post => {
+      dispatch(decreaseVoteAction(post));
+    });
+  };
+}

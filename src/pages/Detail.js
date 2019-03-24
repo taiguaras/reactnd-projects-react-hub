@@ -1,12 +1,31 @@
 import React, {Component} from 'react';
 import Layout from '../components/Layout';
-import {Button, Image} from 'semantic-ui-react'
+import { connect } from 'react-redux';
+import {Image} from 'semantic-ui-react'
 import Post from '../components/Post';
 
+import {handleGetPost} from '../actions/post';
+
 class Detail extends Component {
+
+  state = {
+    postId: null
+  }
+
+  componentWillMount() {
+    const postId = this.props.match.params.postId
+    console.log('DETAIL WILL MOUNT - PROPS', this.props)
+    this.props.dispatch(handleGetPost(postId));    
+  }
+
+  componentDidMount() {
+    console.log('DETAIL DID MOUNT - PROPS', this.props)
+  }
+
+
   render() {
-    const {post} = this.props;
-    console.log(post);
+    const {post} = this.state;
+    console.log('DETAIL rendering Post',post);
     return (
 
       <Layout>
@@ -16,7 +35,7 @@ class Detail extends Component {
               src="http://wowslider.com/sliders/demo-11/data/images/krasivyi_korabl_-1024x768.jpg"/>
           </div>
 
-          <Post iD={this.props.match.params.postId}/>
+          <Post post={post} iD={this.props.match.params.postId}/>
       </Layout>
 
     );
@@ -24,4 +43,11 @@ class Detail extends Component {
 
 }
 
-export default Detail;
+function mapStateToProps({ categories, post }, props) {
+  return {
+    categories,
+    post
+  };
+}
+
+export default connect(mapStateToProps)(Detail);

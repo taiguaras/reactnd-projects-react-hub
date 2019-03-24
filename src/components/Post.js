@@ -6,7 +6,7 @@ import {handleGetPost, handleDeletePost} from '../actions/post';
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
 import CommentExampleMetadata from './CommentSection';
-// import {handleIncreaseVote, handleDecreaseVote} from '../actions/post';
+import {handleIncreaseVote, handleDecreaseVote} from '../actions/post';
 
 class Post extends Component {
 
@@ -20,8 +20,8 @@ class Post extends Component {
 
   componentDidMount() {
     const postId = this.props.iD
-    console.log('log post will mount =>', this.props)
-    this.props.dispatch(handleGetPost(postId));
+    // console.log('log post will mount =>', this.props)
+    // this.props.dispatch(handleGetPost(postId));
   }
 
   editPost() {
@@ -44,19 +44,28 @@ class Post extends Component {
       .push(`/${categoryName}`);
   }
 
+  upVoteLink(post) {
+    this.props.dispatch(handleIncreaseVote(post));
+    console.log("props INCREASE",post)
+  }
+
+  downVoteLink(post){
+    this.props.dispatch(handleDecreaseVote(post));
+    console.log("props DECREASE",post)
+  }
   render() {
 
+ 
     const {post, history} = this.props;
     const dateToFormat = '1976-04-19T12:59';
 
     // console.log("props POST",post)
 
     // Safe
-    if (post.loading === false && (Object.keys(post.data).length === 0 || typeof post.data.error !== 'undefined')) {
+    if (post.loading === false && (Object.keys(post.data).length === 0 || typeof post.data.error !== 'undefined')
+    ) {
       history.push('/page-not-found');
-      return (
-        <div>Redirecting...</div>
-      );
+      return (<div>Redirecting...</div>);
     }
 
     if (post.data === undefined) return (<div>LOADING...</div>)
@@ -69,11 +78,12 @@ class Post extends Component {
             <Grid.Column width={11}>
                     <Menu secondary className="card-meta">
                     <Menu.Item>
-                    <a className='item' onClick={this.handleItemClick}>
+                      
+                    <a className='item' onClick={() => this.upVoteLink(post.data)}>
                           <Icon name='thumbs up outline'/>
                         </a>
                         <span>{post.data.voteScore}</span>
-                        <a className='item' onClick={this.handleItemClick}>
+                        <a className='item' onClick={() => this.downVoteLink(post.data)}>
                           <Icon name='thumbs down outline'/>
                         </a>
                     
@@ -82,7 +92,7 @@ class Post extends Component {
                     <Menu.Item>
                     <a className='item' onClick={this.handleItemClick}>
                           <Icon name='comment alternate'/>
-                          {post.data.voteScore}
+                          {post.data.commentCount}
                         </a>
                        
                     
