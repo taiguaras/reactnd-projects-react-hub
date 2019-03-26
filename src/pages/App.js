@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 import Routes from '../components/Routes';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { handleInitialData } from '../actions/shared';
+
+
 
 const Div = styled.div `
 a.item{
@@ -41,6 +45,9 @@ margin: 20px;
 class App extends Component {
 
   componentWillMount() {
+
+    this.props.dispatch(handleInitialData())
+
     // Get user
     let user = localStorage.getItem('user') || null;
     if (user !== null) {
@@ -51,8 +58,7 @@ class App extends Component {
         id: Math.random().toString(36).substr(-8),
         name: 'Visitor',
         login: 'guestuser',
-        template: 'avatar'
-      }
+        template: 'avatar'      }
 
       // Save user on local Storage
       localStorage.setItem('user', JSON.stringify(user))
@@ -70,4 +76,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect() (App);

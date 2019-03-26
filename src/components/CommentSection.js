@@ -1,41 +1,63 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { Comment, Icon } from 'semantic-ui-react'
+import { Comment, Icon, Input, Button } from 'semantic-ui-react'
 import {handleIncreaseVote, handleDecreaseVote} from '../actions/post';
+import Moment from 'react-moment';
 
 class CommentExampleMetadata extends Component {
 
 
   componentDidMount(){
-    console.log('montou');
+    // console.log('montou comentários!!!!', this.props);
   }
 
   render(){
 
-    const {post,history} = this.props;
+    const {comments} = this.props;
+    const dateToFormat = '1976-04-19T12:59'; 
+    // console.log('PROPS DO COMMENT SECTION', comments.list.lenght);
+    
 
-    if (post.data === undefined) return (<div>LOADING...</div>)
+    //Test para checar se existem comentários -> Está com bug 
+    // if (comments.list.lenght === 0 )
+    // {
+    //   return(
+    //     <div className='comment-section'>
+    //       <p>No comments yet. Be the first one!</p>
+    //       <Input placeholder='Comment...'/> <Button>Send</Button>
+    //     </div>
+    //   )
+    // }
 
       return (
+        <div className="comment-section">      
+            <Comment.Group>        
 
-        <Comment.Group>
-          <Comment>
-            <Comment.Avatar as='a' src='https://react.semantic-ui.com/images/avatar/small/stevie.jpg' />
-            <Comment.Content>
-              <Comment.Author>Stevie Feliciano</Comment.Author>
-              <Comment.Metadata>
-                <div>2 days ago</div>
-                <div>
-                  <Icon name='star' />
-                  5 Faves
-                </div>
-              </Comment.Metadata>
-              <Comment.Text>
-                Hey guys, I hope this example comment is helping you read this documentation.
-              </Comment.Text>
-            </Comment.Content>
-          </Comment>
-        </Comment.Group>
+        { comments.list.map(comment => (   
+
+              <Comment>
+                <Comment.Avatar as='a' src='https://react.semantic-ui.com/images/avatar/small/stevie.jpg' />
+                <Comment.Content>
+                  <Comment.Author>{comment.author}</Comment.Author>
+                  <Comment.Metadata>
+                    <div>
+                      <Icon name='thumbs up outline' />
+                      5
+                      <Icon name='thumbs down outline' />
+                    </div>
+                    <div><Moment date={dateToFormat}>{comment.timestamp}</Moment></div>
+
+                  </Comment.Metadata>
+                  <Comment.Text>{comment.body}</Comment.Text>
+                </Comment.Content>
+              </Comment>
+
+
+          ))}   
+          </Comment.Group>
+        <Input placeholder='Comment...'/> <Button>Send</Button>
+        </div>  
+
         );
   }
 }

@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import {Card, Icon, Image, List, Header, Segment, Divider, Grid, Button, Menu} from 'semantic-ui-react'
 
 import {handleGetPost, handleDeletePost} from '../actions/post';
+import { handleGetPostComments } from '../actions/comments';
+
+
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
 import CommentExampleMetadata from './CommentSection';
@@ -21,7 +24,8 @@ class Post extends Component {
   componentDidMount() {
     const postId = this.props.iD
     // console.log('log post will mount =>', this.props)
-    // this.props.dispatch(handleGetPost(postId));
+    //this.props.dispatch(handleGetPost(postId));
+    //this.props.dispatch(handleGetPostComments(postId));
   }
 
   editPost() {
@@ -56,10 +60,10 @@ class Post extends Component {
   render() {
 
  
-    const {post, history} = this.props;
-    const dateToFormat = '1976-04-19T12:59';
+    const {post, history, comments} = this.props;
+    const dateToFormat = '1976-04-19T12:59';     
 
-    // console.log("props POST",post)
+    // console.log("POST LOG COMMeNTS",comments)
 
     // Safe
     if (post.loading === false && (Object.keys(post.data).length === 0 || typeof post.data.error !== 'undefined')
@@ -213,7 +217,7 @@ class Post extends Component {
 
               <h2>Comments</h2>
 
-              <CommentExampleMetadata post={post}></CommentExampleMetadata>
+              <CommentExampleMetadata comments={comments}></CommentExampleMetadata>
 
               <Divider hidden/>
             </Grid.Column>
@@ -292,10 +296,11 @@ class Post extends Component {
 
 }
 
-function mapStateToProps({ categories, post }, props) {
+function mapStateToProps({ categories, post, comments }, props) {
   return {
     categories,
-    post
+    post,
+    comments
   };
 }
 

@@ -4,22 +4,27 @@ import { connect } from 'react-redux';
 import {Image} from 'semantic-ui-react'
 import Post from '../components/Post';
 
-import {handleGetPost} from '../actions/post';
+import { handleGetPost } from '../actions/post';
+import { receiveComments, handleGetPostComments } from '../actions/comments';
 
 class Detail extends Component {
 
   state = {
-    postId: null
+    postId: this.props.match.params.postId
   }
 
   componentWillMount() {
     const postId = this.props.match.params.postId
     console.log('DETAIL WILL MOUNT - PROPS', this.props)
-    this.props.dispatch(handleGetPost(postId));    
+    console.log('DETAIL WILL MOUNT - STATE', this.state)
+    this.props.dispatch(handleGetPost(postId));
+        
   }
 
   componentDidMount() {
     console.log('DETAIL DID MOUNT - PROPS', this.props)
+    console.log('DETAIL DID MOUNT - STATE', this.state)
+    this.props.dispatch(handleGetPostComments(this.props.match.params.postId)); 
   }
 
 

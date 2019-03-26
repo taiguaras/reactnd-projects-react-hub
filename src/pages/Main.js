@@ -22,6 +22,8 @@ class Main extends Component {
   render() {
     const { activeItem } = this.state
 
+    console.log('CHECK MAIN PROPS', this.props)
+
     return (
       <Layout>
         <div className="header">
