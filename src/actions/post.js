@@ -64,7 +64,7 @@ function increaseVoteAction(post) {
   };
 }
 export function handleIncreaseVote(post) {
-  return dispatch => {
+  return (dispatch) => {
     return increaseVotes(post.id).then(post => {
       dispatch(increaseVoteAction(post));
     });

@@ -165,7 +165,7 @@ class MobileContainer extends Component {
           }}
             vertical>
             <Container>
-              <Menu pointing primary fixed={fixed
+              <Menu pointing fixed={fixed
               ? 'top'
               : null} size='large'
               secondary={!fixed} className="fixed">

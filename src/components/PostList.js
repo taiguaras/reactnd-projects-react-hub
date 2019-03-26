@@ -10,8 +10,10 @@ import Moment from 'react-moment';
 // import {handleGetPost, handleEditPost, handleDeletePost} from
 // '../actions/post';
 import {handlePostList, handleEditPost, handleDeletePost} from '../actions/postList'
+import {handleIncreaseVotes, handleDecreaseVotes} from '../actions/postList'
 import ContentNav from './ContentNav';
 import { equal } from 'assert';
+import PostThumb from './PostThumb';
 
 const options = [
   { key: 'Rating', text: 'Rating', value: 'Rating' },
@@ -73,14 +75,13 @@ class PostList extends Component {
     handlePostList(sortType, sortOrder, search, category);
   }
 
-  upVoteLink(){
-    console.log('clicou up');
+  upVoteLink(post){
+    this.props.dispatch(handleIncreaseVotes(post));
   }
 
-  downVoteLink(){
-    console.log('clicou down');
+  downVoteLink(post){
+    this.props.dispatch(handleDecreaseVotes(post));
   }
-
 
   editPostLink(){
     console.log('clicou edit');
@@ -103,7 +104,8 @@ class PostList extends Component {
   render() {
     
     const {sortType, sortOrder, search, activeItem, currentValue} = this.state;    
-    const {postList} = this.props;
+    const {postList, post} = this.props;
+     
     const dateToFormat = '1976-04-19T12:59-0500';
 
     return (
@@ -113,8 +115,7 @@ class PostList extends Component {
 
             <p className='menu-item' icon='filter'>Sort posts by:</p>
 
-            <Dropdown
-              width={equal}
+            <Dropdown              
               options={this.state.options}
               placeholder='Sort by...'
               search
@@ -128,14 +129,10 @@ class PostList extends Component {
               className='icon'              
             /> 
 
-                        <Dropdown
-              width={equal}
-              options={this.state.options}
+                        <Dropdown                          
               placeholder='Sort by...'
-              search
-              selection
-              fluid
-              allowAdditions
+              search                            
+              fluid              
               additionLabel='Sorted'
               value={currentValue}
               onAddItem={this.handleAddition}
@@ -158,7 +155,9 @@ class PostList extends Component {
 
 
       <Card.Group>
-          {postList.list.map(post => (    
+          {postList.list.map(post => (   
+            
+            // <PostThumb post={post} key={post.id}/>
               <Card post={post} key={post.id}>
                    <Image
                     href={`/post/${post.id}`}
@@ -175,11 +174,11 @@ class PostList extends Component {
                   <Card.Content extra>
                     <div className="card-meta">
                       <div>
-                        <a onClick={() => this.upVoteLink()}>
+                        <a onClick={() => this.upVoteLink(post)}>
                           <Icon name='thumbs up outline'/>
                         </a>
                         <span>{post.voteScore}</span>
-                        <a onClick={() => this.downVoteLink()}>
+                        <a onClick={() => this.downVoteLink(post)}>
                           <Icon name='thumbs down outline'/>
                         </a>
                       </div>
@@ -220,13 +219,23 @@ class PostList extends Component {
 
 }
 
-function mapStateToProps({postList}, props) {
-  // console.log("mapstatetoProps", post)
-  return {postList};
+// function mapStateToProps({postList, Post}, props) {
+//   // console.log("mapstatetoProps", post)
+//   return {postList, Post};
 
+// }
+
+function mapStateToProps({ categories, post, postList }, props) {
+  return {
+    categories,
+    post,
+    postList
+  };
 }
-const mapDispatchToProps = dispatch => bindActionCreators({handlePostList
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({handlePostList, handleIncreaseVotes, handleDecreaseVotes
 }, dispatch);
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostList);
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostList, Post);

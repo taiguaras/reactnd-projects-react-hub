@@ -119,6 +119,9 @@ class Post extends Component {
                 <Header.Subheader>
                 <Moment date={dateToFormat}>{post.timestamp}</Moment> by <a href="#root">Jack</a>
                 </Header.Subheader>
+                <Header.Subheader>
+                <a href="#root">Cat {post.category}</a>
+                </Header.Subheader>
               </Header>
 
 
@@ -210,7 +213,7 @@ class Post extends Component {
 
               <h2>Comments</h2>
 
-              <CommentExampleMetadata></CommentExampleMetadata>
+              <CommentExampleMetadata post={post}></CommentExampleMetadata>
 
               <Divider hidden/>
             </Grid.Column>

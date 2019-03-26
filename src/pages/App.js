@@ -1,12 +1,6 @@
 import React, {Component} from 'react';
 import Routes from '../components/Routes';
 import styled from 'styled-components';
-import {createStore} from 'redux';
-import {Provider} from 'react-redux';
-
-// Prepare store
-import reducers from '../reducers';
-import middlewares from '../middlewares';
 
 const Div = styled.div `
 a.item{
@@ -43,8 +37,6 @@ margin: 20px;
 }
 `;
 
-// Init Store
-const store = createStore(reducers, middlewares);
 
 class App extends Component {
 
@@ -57,9 +49,9 @@ class App extends Component {
       // Define initial user
       user = {
         id: Math.random().toString(36).substr(-8),
-        name: 'Udacity Student',
-        login: 'udacityStudent',
-        template: 'cerulean'
+        name: 'Visitor',
+        login: 'guestuser',
+        template: 'avatar'
       }
 
       // Save user on local Storage
@@ -68,12 +60,12 @@ class App extends Component {
   }
 
   render() {
+    const {store} = this.props;
+    
     return (
-      <Provider store={store}>
         <Div>
           <Routes store={store}/>
         </Div>
-      </Provider>
     );
   }
 }

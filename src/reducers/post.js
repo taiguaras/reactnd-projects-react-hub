@@ -12,10 +12,10 @@ export default function (state = initialState, action) {
       return {loading: false, data: action.post}
 
     case ADD_POST:
-      return {loading: false, data: action.data}
+      return {loading: false, data: action.post}
 
     case EDIT_POST:
-      return {loading: false, data: action.data}
+      return {loading: false, data: action.post}
 
     case INCREASE_VOTE:
     case DECREASE_VOTE:

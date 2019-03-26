@@ -2,19 +2,21 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form'
 
-
 // Reducers
-// import categories from './categories';
-import postList from './postList';
+import user from './authedUser';
 import post from './post';
-// import user from './user';
-// import comments from './comments';
+import postList from './postList';
+import categories from './categories';
+import comments from './comments';
 
 // Combine and export
 export default combineReducers({
-//   user,
-postList,
+
+  user,
   post,
+  postList,
+  categories,
+  comments,  
   form: formReducer
-//   comments
+
 });
