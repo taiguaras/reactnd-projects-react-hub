@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 import {Card, Icon, Image, List, Header, Segment, Divider, Grid, Button, Menu} from 'semantic-ui-react'
 
 import {handleGetPost, handleDeletePost} from '../actions/post';
@@ -121,12 +122,14 @@ class Post extends Component {
               <Header size="large" as="h2">
                 <Header.Content>{post.data.title}</Header.Content>
                 <Header.Subheader>
-                <Moment date={dateToFormat}>{post.timestamp}</Moment> by <a href="#root">Jack</a>
+                <Moment date={dateToFormat}>{post.timestamp}</Moment> by <a href="#">{post.data.author}</a>
                 </Header.Subheader>
                 <Header.Subheader>
-                <a href="#root">Cat {post.category}</a>
+                <Link to={`/posts/${post.data.category}`}> {post.data.category}</Link>
                 </Header.Subheader>
               </Header>
+
+                                    
 
 
                     <Divider/>
@@ -273,11 +276,11 @@ class Post extends Component {
         <Card.Content extra>
           <div className="card-meta">
             <div>
-              <a>
+              <a onClick={() => this.upVoteLink(post.data)}>
                 <Icon name='thumbs up outline'/>
               </a>
               <span>{post.data.voteScore}</span>
-              <a>
+              <a onClick={() => this.downVoteLink(post.data)}>
                 <Icon name='thumbs down outline'/>
               </a>
             </div>
