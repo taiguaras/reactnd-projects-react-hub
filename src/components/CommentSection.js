@@ -11,6 +11,20 @@ class CommentExampleMetadata extends Component {
     // console.log('montou comentários!!!!', this.props);
   }
 
+  handleSubmit = (e) => {
+    e.preventDefault()
+
+    const { text } = this.state
+
+    // todo: Add Tweet to Store
+
+    console.log('New Tweet: ', text)
+
+    this.setState(() => ({
+      text: ''
+    }))
+  }
+
   render(){
 
     const {comments} = this.props;
@@ -55,7 +69,18 @@ class CommentExampleMetadata extends Component {
 
           ))}   
           </Comment.Group>
-        <Input placeholder='Comment...'/> <Button>Send</Button>
+
+          <form className='new-tweet' onSubmit={this.handleSubmit}>
+        <Input placeholder='Comment...' value={'abc'}
+            onChange={this.handleChange}/>           
+        
+        <Button
+            className='btn'
+            type='submit'
+            >
+              Submit
+          </Button>
+          </form>
         </div>  
 
         );

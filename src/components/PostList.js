@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import Post from './Post';
 import {Link} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
@@ -9,8 +9,8 @@ import Moment from 'react-moment';
 
 // import {handleGetPost, handleEditPost, handleDeletePost} from
 // '../actions/post';
-import {handlePostList, handleEditPost, handleDeletePost} from '../actions/postList'
-import {handleIncreaseVotes, handleDecreaseVotes} from '../actions/postList'
+import {handleEditPost, handleDeletePost} from '../actions/post'
+import {handlePostList, handleIncreaseVotes, handleDecreaseVotes} from '../actions/postList'
 import ContentNav from './ContentNav';
 import { equal } from 'assert';
 import PostThumb from './PostThumb';
@@ -50,7 +50,7 @@ class PostList extends Component {
 
     sortPostsByDate() {
     const { sortOrder, search } = this.state;
-    const { category, handleGetPosts } = this.props;
+    const { category, handlePostList } = this.props;
     this.setState({
       sortType: 'DATE'
     });
@@ -58,7 +58,7 @@ class PostList extends Component {
   }
   sortPostsByVotes() {
     const { sortOrder, search } = this.state;
-    const { category, handleGetPosts } = this.props;
+    const { category, handlePostList } = this.props;
     this.setState({
       sortType: 'VOTES'
     });
@@ -76,24 +76,30 @@ class PostList extends Component {
   }
 
   upVoteLink(post){
-    this.props.dispatch(handleIncreaseVotes(post));
+    const {handleIncreaseVotes} = this.props;
+    handleIncreaseVotes(post);    
   }
 
   downVoteLink(post){
-    this.props.dispatch(handleDecreaseVotes(post));
+    const {handleDecreaseVotes} = this.props;
+    handleDecreaseVotes(post);
   }
 
-  editPostLink(){
-    console.log('clicou edit');
+  editPostLink(post){
+    //const {handleEditPost} = this.props;
+    handleEditPost(post);
   }
 
-  deletePostLink(){
-    console.log('clicou delete');
+  deletePostLink(post){
+    //const {handleDeletePost} = this.props;
+    handleDeletePost(post);
   }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   handleChange = (e, { value }) => this.setState({ currentValue: value })
+
+  handleChangeTwo = (e, { name, value }) => this.setState({ [name]: value })
 
   handleAddition = (e, { value }) => {
     this.setState({
@@ -123,27 +129,37 @@ class PostList extends Component {
               fluid
               allowAdditions
               additionLabel='Sorted'
-              value={currentValue}
+              value={currentValue}              
               onAddItem={this.handleAddition}
               onChange={this.handleChange}
-              className='icon'              
+              className='icon'
+              selectedLabel={0}              
             /> 
 
-                        <Dropdown                          
-              placeholder='Sort by...'
-              search                            
-              fluid              
+              <Dropdown   
+              options={this.state.options}                       
+              placeholder={this.state.options}
+              
+              search
+              selection                            
+              fluid
+              allowAdditions
               additionLabel='Sorted'
               value={currentValue}
+              selectedLabel={0}  
               onAddItem={this.handleAddition}
-              onChange={this.handleChange}
-              className='icon'              
+              onChange={this.handleChangeTwo} 
+              selection={true}
+              value={'Rating'}
+              className='icon'
             >
 
+            
+
                 <Dropdown.Menu>
-                  <Dropdown.Header content='Search Issues' />                  
-                  <Dropdown.Item value={currentValue} onChange={this.handleChange} onClick={() => this.sortPostsByVotes()} active={sortType === 'VOTES'} key='Rating' text='Rating' value='Rating' />
-                  <Dropdown.Item value={currentValue} onChange={this.handleChange} onClick={() => this.sortPostsByDate()} active={sortType === 'DATE'} key='Date' text='Date' value='Date' />
+                  <Dropdown.Header value={currentValue} />                  
+                  <Dropdown.Item onChange={this.handleChange} onAddItem={this.handleAddition} onClick={() => this.sortPostsByVotes()} active={sortType === 'VOTES'} key='Rating' text='Rating' value='Rating' />
+                  <Dropdown.Item onChange={this.handleChange} onAddItem={this.handleAddition} onClick={() => this.sortPostsByDate()} active={sortType === 'DATE'} key='Date' text='Date' value='Date' />
                 </Dropdown.Menu>
               </Dropdown>        
 
@@ -174,6 +190,7 @@ class PostList extends Component {
                   <Card.Content extra>
                     <div className="card-meta">
                       <div>
+                        <Fragment>
                         <a onClick={() => this.upVoteLink(post)}>
                           <Icon name='thumbs up outline'/>
                         </a>
@@ -181,6 +198,7 @@ class PostList extends Component {
                         <a onClick={() => this.downVoteLink(post)}>
                           <Icon name='thumbs down outline'/>
                         </a>
+                        </Fragment>
                       </div>
                       <a>
                         <Link to={`/post/${post.id}`}>
@@ -233,9 +251,17 @@ function mapStateToProps({ categories, post, postList }, props) {
   };
 }
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({handlePostList, handleIncreaseVotes, handleDecreaseVotes
-}, dispatch);
-
-
+const mapDispatchToProps = dispatch => bindActionCreators({ handlePostList, handleIncreaseVotes, handleDecreaseVotes }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostList, Post);
+
+
+// function mapStateToProps({ categories, post, postList }, props) {
+//   return {
+//     categories,
+//     post,
+//     postList
+//   };
+// }
+
+// export default connect(mapStateToProps)(Post);

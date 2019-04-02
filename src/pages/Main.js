@@ -46,7 +46,7 @@ class Main extends Component {
                 </Segment>
               </Grid.Column>
 
-              <Grid.Column width={4}>
+              {/* <Grid.Column width={4}>
               <Menu vertical>
                   <Menu.Item name='inbox' active={activeItem === 'inbox'} onClick={this.handleItemClick}>
                     <Label color='teal'>1</Label>
@@ -66,7 +66,7 @@ class Main extends Component {
                     <Input icon='search' placeholder='Search mail...' />
                   </Menu.Item>
                 </Menu>
-              </Grid.Column>
+              </Grid.Column> */}
             </Grid>
           </Container>
 
